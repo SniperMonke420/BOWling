@@ -35,6 +35,11 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(requests -> requests
                         //TODO .requestMatchers("/api/alley/add").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(
+                                "/swagger-ui/**",       // Zezwól na Swagger UI
+                                "/v3/api-docs/**",      // Dokumentacja OpenAPI
+                                "/swagger-ui.html"      // Stary endpoint Swaggera
+                        ).permitAll()
                         .requestMatchers("/api/register", "/api/login").permitAll()
                         .anyRequest().denyAll()
                 )

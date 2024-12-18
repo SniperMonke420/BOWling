@@ -7,7 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RegistrationRequest {
-    private String username;
+    private String firstName;
+    private String lastName;
     private String password;
     private String email;
     @JsonProperty("isAdmin")
