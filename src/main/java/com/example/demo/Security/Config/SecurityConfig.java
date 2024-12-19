@@ -34,11 +34,11 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(requests -> requests
-                        //TODO .requestMatchers("/api/alley/add").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/api/profile").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                         .requestMatchers(
-                                "/swagger-ui/**",       // Zezwól na Swagger UI
-                                "/v3/api-docs/**",      // Dokumentacja OpenAPI
-                                "/swagger-ui.html"      // Stary endpoint Swaggera
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html"
                         ).permitAll()
                         .requestMatchers("/api/register", "/api/login").permitAll()
                         .anyRequest().denyAll()
