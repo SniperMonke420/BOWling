@@ -8,23 +8,22 @@
 
     <changeSet id="202405141536_init_user" author="Budzin">
         <createTable tableName="users">
-            <column name="id" type="serial">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="first_name" type="varchar(255)">
-                <constraints nullable="false" unique="true"/>
-            </column>
-            <column name="last_name" type="varchar(255)">
-                <constraints nullable="false" unique="true"/>
-            </column>
-            <column name="password" type="varchar(255)">
+            <column name="first_name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="email" type="varchar(255)">
+            <column name="last_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
                 <constraints nullable="false" unique="true"/>
             </column>
         </createTable>
     </changeSet>
-
 
 </databaseChangeLog>

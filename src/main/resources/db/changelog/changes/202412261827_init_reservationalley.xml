@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="202412261827_init_reservationalley" author="Budzin">
+        <createTable tableName="reservation_alley">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="alley_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reservation_date_time" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint
+                baseTableName="reservation_alley" baseColumnNames="alley_id"
+                referencedTableName="alley" referencedColumnNames="id"
+                constraintName="fk_reservation_alley_alley"/>
+        <addForeignKeyConstraint
+                baseTableName="reservation_alley" baseColumnNames="user_id"
+                referencedTableName="users" referencedColumnNames="id"
+                constraintName="fk_reservation_alley_user"/>
+    </changeSet>
+</databaseChangeLog>
