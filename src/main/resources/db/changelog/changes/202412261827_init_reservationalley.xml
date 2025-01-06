@@ -19,6 +19,9 @@
             <column name="reservation_date_time" type="TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
+            <column name="order_date_time" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
         <addForeignKeyConstraint
                 baseTableName="reservation_alley" baseColumnNames="alley_id"

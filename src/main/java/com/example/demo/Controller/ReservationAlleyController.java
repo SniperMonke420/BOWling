@@ -1,30 +1,35 @@
 package com.example.demo.Controller;
 
+import com.example.demo.DTO.ReservationAlleyCreateRequest;
 import com.example.demo.Entity.ReservationAlley;
+import com.example.demo.Security.Entity.User;
+import com.example.demo.Security.Repository.UserRepository;
 import com.example.demo.Service.ReservationAlleyService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/reservation")
 public class ReservationAlleyController {
-    private final ReservationAlleyService reservationService;
+    @Autowired
+    private ReservationAlleyService reservationService;
+    @Autowired
+    private UserRepository userRepository;
 
     public ReservationAlleyController(ReservationAlleyService reservationService) {
         this.reservationService = reservationService;
     }
 
     @PostMapping
-    public ResponseEntity<ReservationAlley> reserveAlley(@RequestBody Map<String, Object> request) {
-        Long alleyId = ((Number) request.get("alleyId")).longValue();
-        Long userId = ((Number) request.get("userId")).longValue();
-        LocalDateTime reservationDateTime = LocalDateTime.parse((String) request.get("reservationDateTime"));
-
-        return ResponseEntity.ok(reservationService.reserveAlley(alleyId, userId, reservationDateTime));
+    public ResponseEntity<ReservationAlley> reserveAlley(@RequestBody ReservationAlleyCreateRequest reservationAlleyCreateRequest, @AuthenticationPrincipal UserDetails userDetails) {
+        User user = userRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return ResponseEntity.ok(reservationService.reserveAlley(reservationAlleyCreateRequest, user.getId()));
     }
 
     @DeleteMapping("/{id}")
@@ -33,9 +38,10 @@ public class ReservationAlleyController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<ReservationAlley>> getUserReservations(@PathVariable Long userId) {
+    @GetMapping("/user")
+    public ResponseEntity<List<ReservationAlley>> getUserReservations(@AuthenticationPrincipal UserDetails userDetails) {
+        User user = (User) userDetails;
+        Long userId = user.getId();
         return ResponseEntity.ok(reservationService.getReservationsByUser(userId));
     }
 }
-

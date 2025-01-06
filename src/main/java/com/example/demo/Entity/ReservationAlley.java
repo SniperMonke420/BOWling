@@ -24,4 +24,6 @@ public class ReservationAlley {
     private User user;
 
     private LocalDateTime reservationDateTime;
+
+    private LocalDateTime orderDateTime;
 }
