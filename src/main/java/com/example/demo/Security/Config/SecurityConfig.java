@@ -37,6 +37,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/profile").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                         .requestMatchers("/api/reservation/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                         .requestMatchers("/api/alley/available").hasAuthority("ROLE_USER")
+                        .requestMatchers("/api/alley").permitAll()
                         .requestMatchers("/api/alley/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(
                                 "/swagger-ui/**",
@@ -56,6 +57,7 @@ public class SecurityConfig {
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
+
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
