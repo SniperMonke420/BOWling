@@ -36,6 +36,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/api/profile").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                         .requestMatchers("/api/reservation/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                        .requestMatchers("/api/alley/availability").hasAuthority("ROLE_USER")
                         .requestMatchers("/api/alley/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(
                                 "/swagger-ui/**",
