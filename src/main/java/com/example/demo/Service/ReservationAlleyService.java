@@ -1,6 +1,7 @@
 package com.example.demo.Service;
 
 import com.example.demo.DTO.ReservationAlleyCreateRequest;
+import com.example.demo.DTO.ReservationAlleyGetRequest;
 import com.example.demo.Entity.Alley;
 import com.example.demo.Entity.ReservationAlley;
 import com.example.demo.Repository.AlleyRepository;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -56,7 +58,18 @@ public class ReservationAlleyService {
         reservationAlleyRepository.deleteById(reservationId);
     }
 
-    public List<ReservationAlley> getReservationsByUser(Long userId) {
-        return reservationAlleyRepository.findByUserId(userId);
+    public List<ReservationAlleyGetRequest> getReservationsByUser(Long userId) {
+        List<ReservationAlley> reservationList = reservationAlleyRepository.findByUserId(userId);
+        List<ReservationAlleyGetRequest> reservationListDto = new ArrayList<>();
+
+        for (ReservationAlley reservation : reservationList) {
+            ReservationAlleyGetRequest dto = new ReservationAlleyGetRequest();
+            dto.setId(reservation.getId());
+            dto.setAlleyId(reservation.getAlley().getId());
+            dto.setReservationDateTime(reservation.getReservationDateTime());
+            dto.setOrderDateTime(reservation.getOrderDateTime());
+            reservationListDto.add(dto);
+        }
+        return reservationListDto;
     }
 }

@@ -6,6 +6,7 @@ import com.example.demo.Service.AlleyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -18,9 +19,9 @@ public class AlleyController {
     }
 
     @PostMapping
-    public ResponseEntity<Alley> addAlley(@RequestBody AlleyCreateRequest alleyCreateRequest) {
+    public ResponseEntity<Void> addAlley(@RequestBody AlleyCreateRequest alleyCreateRequest) {
         Alley newAlley = alleyService.addAlley(alleyCreateRequest);
-        return ResponseEntity.ok(newAlley);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping
@@ -34,4 +35,11 @@ public class AlleyController {
         alleyService.deleteAlley(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/available")
+    public ResponseEntity<List<Alley>> getAvailableAlleys(@RequestBody LocalDateTime reservationDateTime) {
+        List<Alley> availableAlleys = alleyService.getAvailableAlleys(reservationDateTime);
+        return ResponseEntity.ok(availableAlleys);
+    }
+
 }

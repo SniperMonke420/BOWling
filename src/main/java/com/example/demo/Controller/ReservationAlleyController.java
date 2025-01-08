@@ -1,6 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.DTO.ReservationAlleyCreateRequest;
+import com.example.demo.DTO.ReservationAlleyGetRequest;
 import com.example.demo.Entity.ReservationAlley;
 import com.example.demo.Security.Entity.User;
 import com.example.demo.Security.Repository.UserRepository;
@@ -26,10 +27,11 @@ public class ReservationAlleyController {
     }
 
     @PostMapping
-    public ResponseEntity<ReservationAlley> reserveAlley(@RequestBody ReservationAlleyCreateRequest reservationAlleyCreateRequest, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<Void> reserveAlley(@RequestBody ReservationAlleyCreateRequest reservationAlleyCreateRequest, @AuthenticationPrincipal UserDetails userDetails) {
         User user = userRepository.findByEmail(userDetails.getUsername())
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        return ResponseEntity.ok(reservationService.reserveAlley(reservationAlleyCreateRequest, user.getId()));
+        reservationService.reserveAlley(reservationAlleyCreateRequest, user.getId());
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
@@ -39,7 +41,7 @@ public class ReservationAlleyController {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<List<ReservationAlley>> getUserReservations(@AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<List<ReservationAlleyGetRequest>> getUserReservations(@AuthenticationPrincipal UserDetails userDetails) {
         User user = (User) userDetails;
         Long userId = user.getId();
         return ResponseEntity.ok(reservationService.getReservationsByUser(userId));
