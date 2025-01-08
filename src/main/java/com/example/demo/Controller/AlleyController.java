@@ -37,8 +37,8 @@ public class AlleyController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/available")
-    public ResponseEntity<List<AlleyGetAvailable>> checkAvailability(@RequestBody LocalDateTime reservationDateTime) {
+    @GetMapping("/available/{reservationDateTime}")
+    public ResponseEntity<List<AlleyGetAvailable>> checkAvailability(@PathVariable LocalDateTime reservationDateTime) {
         List<AlleyGetAvailable> response = alleyService.getAvailableAlleys(reservationDateTime);
         return ResponseEntity.ok(response);
     }
