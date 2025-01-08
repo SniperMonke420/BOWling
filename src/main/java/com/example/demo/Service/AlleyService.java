@@ -1,6 +1,7 @@
 package com.example.demo.Service;
 
 import com.example.demo.DTO.AlleyCreateRequest;
+import com.example.demo.DTO.AlleyGetAvailable;
 import com.example.demo.Entity.Alley;
 import com.example.demo.Repository.AlleyRepository;
 import com.example.demo.Repository.ReservationAlleyRepository;
@@ -34,12 +35,22 @@ public class AlleyService {
         alleyRepository.deleteById(alleyId);
     }
 
-    public List<Alley> getAvailableAlleys(LocalDateTime reservationDateTime){
+    public List<AlleyGetAvailable> getAvailableAlleys(LocalDateTime reservationDateTime){
         List<Alley> allAlleys = alleyRepository.findAll();
-        List<Alley> reservedAlleys = reservationAlleyRepository.findReservedAlleysByDateTime(reservationDateTime);
-        List<Alley> availableAlleys = allAlleys.stream()
-                .filter(alley -> !reservedAlleys.contains(alley))
+
+        List<Long> reservedAlleyIds = reservationAlleyRepository.findReservedAlleyIdsByDateTime(reservationDateTime);
+
+        List<AlleyGetAvailable> response = allAlleys.stream()
+                .map(alley -> {
+                    AlleyGetAvailable dto = new AlleyGetAvailable();
+                    dto.setId(alley.getId());
+                    dto.setName(alley.getName());
+                    dto.setMaxPersons(alley.getMaxPersons());
+                    dto.setPrice(alley.getPrice());
+                    dto.setIsAvailable(!reservedAlleyIds.contains(alley.getId()));
+                    return dto;
+                })
                 .toList();
-        return availableAlleys;
+        return response;
     }
 }

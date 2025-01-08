@@ -13,8 +13,8 @@ public interface ReservationAlleyRepository extends JpaRepository<ReservationAll
     List<ReservationAlley> findByUserId(Long userId);
     boolean existsByAlleyIdAndReservationDateTime(Long alleyId, LocalDateTime reservationDateTime);
 
-    @Query("SELECT r.alley FROM ReservationAlley r WHERE r.reservationDateTime = :reservationDateTime")
-    List<Alley> findReservedAlleysByDateTime(@Param("reservationDateTime") LocalDateTime reservationDateTime);
+    @Query("SELECT r.alley.id FROM ReservationAlley r WHERE r.reservationDateTime = :reservationDateTime")
+    List<Long> findReservedAlleyIdsByDateTime(@Param("reservationDateTime") LocalDateTime reservationDateTime);
 }
 
 

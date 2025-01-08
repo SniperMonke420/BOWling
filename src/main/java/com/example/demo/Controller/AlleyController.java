@@ -1,6 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.DTO.AlleyCreateRequest;
+import com.example.demo.DTO.AlleyGetAvailable;
 import com.example.demo.Entity.Alley;
 import com.example.demo.Service.AlleyService;
 import org.springframework.http.ResponseEntity;
@@ -37,9 +38,8 @@ public class AlleyController {
     }
 
     @GetMapping("/available")
-    public ResponseEntity<List<Alley>> getAvailableAlleys(@RequestBody LocalDateTime reservationDateTime) {
-        List<Alley> availableAlleys = alleyService.getAvailableAlleys(reservationDateTime);
-        return ResponseEntity.ok(availableAlleys);
+    public ResponseEntity<List<AlleyGetAvailable>> checkAvailability(@RequestBody LocalDateTime reservationDateTime) {
+        List<AlleyGetAvailable> response = alleyService.getAvailableAlleys(reservationDateTime);
+        return ResponseEntity.ok(response);
     }
-
 }
