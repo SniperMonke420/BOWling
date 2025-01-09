@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 public class AlleyGetAvailable {
     private Long id;
     private String name;
-    private Integer maxPersons;
+    private Long maxPersons;
     private BigDecimal price;
     private Boolean isAvailable;
 }

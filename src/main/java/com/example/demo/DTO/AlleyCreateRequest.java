@@ -9,6 +9,6 @@ import java.math.BigDecimal;
 @Setter
 public class AlleyCreateRequest {
     private String name;
-    private Integer maxPersons;
+    private Long maxPersons;
     private BigDecimal price;
 }

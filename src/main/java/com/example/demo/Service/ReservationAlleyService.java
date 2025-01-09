@@ -66,10 +66,13 @@ public class ReservationAlleyService {
             ReservationAlleyGetRequest dto = new ReservationAlleyGetRequest();
             dto.setId(reservation.getId());
             dto.setAlleyId(reservation.getAlley().getId());
+            dto.setPrice(reservation.getAlley().getPrice());
+            dto.setMaxPersons(reservation.getAlley().getMaxPersons());
             dto.setReservationDateTime(reservation.getReservationDateTime());
             dto.setOrderDateTime(reservation.getOrderDateTime());
             reservationListDto.add(dto);
         }
         return reservationListDto;
     }
+
 }

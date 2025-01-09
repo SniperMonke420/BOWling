@@ -24,7 +24,7 @@ public class Alley {
 
     @NotNull
     @Min(0)
-    private Integer maxPersons;
+    private Long maxPersons;
 
     @NotNull
     @DecimalMin("0.0")
