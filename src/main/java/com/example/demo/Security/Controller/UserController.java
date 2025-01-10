@@ -13,13 +13,17 @@ import com.example.demo.Security.Utils.JwtUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -84,5 +88,14 @@ public class UserController {
         userDataResponse.setFirstName(user.getFirstName());
         userDataResponse.setLastName(user.getLastName());
         return userDataResponse;
+    }
+
+    @GetMapping("/role")
+    public ResponseEntity<Map<String, String>> getUserRole(Authentication authentication) {
+        String role = authentication.getAuthorities().stream()
+                .findFirst()
+                .map(GrantedAuthority::getAuthority)
+                .orElse("USER");
+        return ResponseEntity.ok(Collections.singletonMap("role", role));
     }
 }

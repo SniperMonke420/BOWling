@@ -43,7 +43,7 @@ public class AlleyController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAlley(@PathVariable Long id) {
         alleyService.deleteAlley(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/available/{reservationDateTime}")

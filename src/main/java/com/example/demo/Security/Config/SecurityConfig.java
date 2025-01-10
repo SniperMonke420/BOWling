@@ -37,6 +37,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/profile").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                         .requestMatchers("/api/reservation/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                         .requestMatchers("/api/alley/available/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                        .requestMatchers("/api/role").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                         .requestMatchers("/api/alley").permitAll()
                         .requestMatchers("/api/alley/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(
