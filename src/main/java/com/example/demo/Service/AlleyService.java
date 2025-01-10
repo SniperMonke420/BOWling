@@ -2,6 +2,7 @@ package com.example.demo.Service;
 
 import com.example.demo.DTO.AlleyCreateRequest;
 import com.example.demo.DTO.AlleyGetAvailable;
+import com.example.demo.DTO.AlleyUpdateRequest;
 import com.example.demo.Entity.Alley;
 import com.example.demo.Repository.AlleyRepository;
 import com.example.demo.Repository.ReservationAlleyRepository;
@@ -52,5 +53,26 @@ public class AlleyService {
                 })
                 .toList();
         return response;
+    }
+
+    public AlleyService(AlleyRepository alleyRepository) {
+        this.alleyRepository = alleyRepository;
+    }
+
+    public Alley updateAlley(Long id, AlleyUpdateRequest alleyUpdateRequest) {
+        Alley alley = alleyRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Alley not found with id: " + id));
+
+        if (alleyUpdateRequest.getPrice() != null) {
+            alley.setPrice(alleyUpdateRequest.getPrice());
+        }
+        if (alleyUpdateRequest.getName() != null) {
+            alley.setName(alleyUpdateRequest.getName());
+        }
+        if (alleyUpdateRequest.getMaxPersons() != null) {
+            alley.setMaxPersons(alleyUpdateRequest.getMaxPersons());
+        }
+
+        return alleyRepository.save(alley);
     }
 }

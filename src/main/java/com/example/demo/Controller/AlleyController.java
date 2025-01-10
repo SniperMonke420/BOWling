@@ -2,6 +2,7 @@ package com.example.demo.Controller;
 
 import com.example.demo.DTO.AlleyCreateRequest;
 import com.example.demo.DTO.AlleyGetAvailable;
+import com.example.demo.DTO.AlleyUpdateRequest;
 import com.example.demo.Entity.Alley;
 import com.example.demo.Service.AlleyService;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,14 @@ public class AlleyController {
     public ResponseEntity<Void> addAlley(@RequestBody AlleyCreateRequest alleyCreateRequest) {
         Alley newAlley = alleyService.addAlley(alleyCreateRequest);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Alley> updateAlley(
+            @PathVariable Long id,
+            @RequestBody AlleyUpdateRequest alleyUpdateRequest) {
+        Alley updatedAlley = alleyService.updateAlley(id, alleyUpdateRequest);
+        return ResponseEntity.ok(updatedAlley);
     }
 
     @GetMapping
