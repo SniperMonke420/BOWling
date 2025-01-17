@@ -90,3 +90,9 @@ Przed rozpoczęciem upewnij się, że masz zainstalowane następujące narzędzi
   Dodanie endpointu pozwalającego na edycję torów.
 - **Fixed canceling reservation response, deleting alley response, added getUserRole endpoint**  
   Zmiana odpowiedzi na usuwanie rezerwacji oraz toru i dodanie endpointu zwracającego rolę użytkownika.
+- **Create README.md**
+  Stworzenie pliku README.md.
+- **Update README.md with commit history**
+  Zaktualizowanie pliku README.md o historię commitów oraz poprawienie wyglądu pliku.
+- **Updated cancelReservation endpoint**
+  Zaktualizowanie endpointu od anulowania rezerwacji w celu sprawdzenia czy rezerwacja faktycznie należy do użytkownika.

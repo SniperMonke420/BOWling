@@ -35,8 +35,10 @@ public class ReservationAlleyController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> cancelReservation(@PathVariable Long id) {
-        reservationService.cancelReservation(id);
+    public ResponseEntity<Void> cancelReservation(@PathVariable Long reservationId, @AuthenticationPrincipal UserDetails userDetails) {
+        User user = userRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        reservationService.cancelReservation(reservationId, user.getId());
         return ResponseEntity.ok().build();
     }
 

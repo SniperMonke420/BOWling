@@ -47,14 +47,17 @@ public class ReservationAlleyService {
         reservation.setReservationDateTime(reservationAlleyCreateRequest.getReservationDateTime());
         reservation.setOrderDateTime(LocalDateTime.now());
 
-        System.out.println("User ID: " + userId);
-        System.out.println("Alley ID: " + reservationAlleyCreateRequest.getAlleyId());
-        System.out.println("Reservation DateTime: " + reservationAlleyCreateRequest.getReservationDateTime());
-
         return reservationAlleyRepository.save(reservation);
     }
 
-    public void cancelReservation(Long reservationId) {
+    public void cancelReservation(Long reservationId, Long userId) {
+        ReservationAlley reservation = reservationAlleyRepository.findById(reservationId)
+                .orElseThrow(() -> new RuntimeException("Reservation not found"));
+
+        if (reservation.getUser().getId().equals(userId)) {
+            throw new RuntimeException("Reservation does not belong to the user");
+        }
+
         reservationAlleyRepository.deleteById(reservationId);
     }
 
